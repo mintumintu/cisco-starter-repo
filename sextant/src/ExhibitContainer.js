@@ -1,6 +1,8 @@
 import React from 'react'
 import ExhibitComponent from './ExhibitComponent'
 import { useState } from 'react';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+const client = new W3CWebSocket('ws://localhost:55455');
 
 
 function ExhibitContainer() {
@@ -13,6 +15,10 @@ function ExhibitContainer() {
       console.log(data.ip)});
 
   //Connecting web socket and getting values
+  client.onmessage = (message) => {
+    setLatency(new Date().getTime() - message.data)
+};
+
   return (
     <>
     <ExhibitComponent heading="IP" body={ipaddr} />
