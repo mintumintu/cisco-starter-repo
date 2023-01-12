@@ -1,21 +1,22 @@
 import React from 'react'
 import ExhibitComponent from './ExhibitComponent'
-import { Component } from 'react';
 import { useState } from 'react';
 
 
 function ExhibitContainer() {
-  const [ipaddr, setIpaddr] = useState("127.0.0.1");
+  const [ipaddr, setIpaddr] = useState("Fetching");
+  const [latency,setLatency]= useState("Fetching");
 
-  // componentDidMount(){
+  // Fetching ip address from ipify api
     fetch('https://api.ipify.org?format=json').then((response)=>response.json()).then((data)=>{
       setIpaddr(String(data.ip))
       console.log(data.ip)});
-  // }
+
+  //Connecting web socket and getting values
   return (
     <>
     <ExhibitComponent heading="IP" body={ipaddr} />
-    {/* <ExhibitComponent heading="IP" body="127.0.0.1"/> */}
+    <ExhibitComponent heading="Latency(MB)" body={latency}/>
     </>
   )
 }
